@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { Category } from './category.entity';
 
 @Entity()
@@ -25,5 +25,11 @@ export class Game{
 
     @Column('date')
     createdAt: Date;
+
+    @Column('int')
+    plays: number;
+
+    @Column("float")
+    rateTotal: number;
 
 }

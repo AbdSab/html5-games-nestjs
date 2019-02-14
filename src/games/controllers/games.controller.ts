@@ -17,5 +17,11 @@ export class GamesController {
         return await this.gamesService.addData();
     }
     
+    @Get("/:gameSlug")
+    async game(@Param() params): Promise<Game>{
+        this.gamesService.addGamePlay(params.gameSlug);
+        return await this.gamesService.findGameBySlug(params.gameSlug);
+    }
+    
 
 }

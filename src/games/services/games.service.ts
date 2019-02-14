@@ -5,8 +5,10 @@ import { Game } from '../entities/game.entity';
 import { Category } from '../entities/category.entity';
 import { getConnection } from "typeorm";
 import { MAX_ELEMENTS_PAGE } from '../../constants';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const faker = require('faker');
+
 @Injectable()
 export class GamesService {
 
@@ -46,13 +48,18 @@ export class GamesService {
                     .limit(MAX_ELEMENTS_PAGE)
                     .offset(_page*MAX_ELEMENTS_PAGE)
                     .getMany();
-        /*
-        return this.catRep.findOne({relations:["games"],where:{slug:_cat}})
-                .then(e => {
-                    console.log(e);
-                    return e.games;
-                })
-        */
+  }
+
+  async addGamePlay(_slug: string): Promise<Game>{
+        let game = await this.findGameBySlug(_slug);
+        game.plays++;
+        return await this.gameRep.save(game); 
+  }
+
+  async addGameRate(_slug: string,_rate: number, _ip: string): Promise<Game>{
+      let game = await this.gameRep.findOne({where:{slug:_slug}});
+      game.rateTotal;
+      return await this.gameRep.save(game);
   }
 
   async addData(){
@@ -66,10 +73,12 @@ export class GamesService {
 
             let game = new Game();
             game.name = faker.name.findName();
-            game.slug = game.name;
+            game.slug = faker.helpers.slugify(game.name);
             game.description = faker.lorem.paragraph();
             game.link = faker.internet.url();
             game.createdAt = faker.date.past();
+            game.rateTotal = faker.random.number();
+            game.plays = faker.random.number();
 
             await this.gameRep.save(game);
 

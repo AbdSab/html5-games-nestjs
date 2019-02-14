@@ -20,5 +20,4 @@ export class CategoryController {
         return await this.gamesService.findGamesByCategory(category, query.page);
     }
     
-
 }
