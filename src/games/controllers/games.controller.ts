@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Param } from '@nestjs/common';
 import { Game } from '../entities/game.entity';
 import { GamesService } from '../services/games.service';
 
@@ -8,13 +8,13 @@ export class GamesController {
     constructor(private readonly gamesService: GamesService){}
 
     @Get("")
-    async list(): Promise<Game[]>{
-        return await this.gamesService.findGameByCategory("uiui");
+    async list(@Param() params): Promise<Game[]>{
+        return await this.gamesService.findGameAll(params.page);
     }
 
-    @Get()
-    play(){
-
+    @Get("add")
+    async play(){
+        return await this.gamesService.addData();
     }
     
 

@@ -23,4 +23,7 @@ export class Game{
     @Column({length:500})
     link: string
 
+    @Column('date')
+    createdAt: Date;
+
 }

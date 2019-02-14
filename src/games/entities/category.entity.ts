@@ -17,4 +17,5 @@ export class Category{
     @ManyToMany(type => Game, game => game.categories)
     games: Game[];
 
+
 }
