@@ -5,7 +5,6 @@ import { Game } from '../entities/game.entity';
 import { Category } from '../entities/category.entity';
 import { getConnection } from "typeorm";
 import { MAX_ELEMENTS_PAGE } from '../../constants';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const faker = require('faker');
 
