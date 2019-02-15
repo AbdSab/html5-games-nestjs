@@ -21,7 +21,10 @@ export class Game{
     description: string;
 
     @Column({length:500})
-    link: string
+    image: string;
+
+    @Column({length:500})
+    link: string;
 
     @Column('date')
     createdAt: Date;
@@ -29,7 +32,10 @@ export class Game{
     @Column('int')
     plays: number;
 
+    @Column("int")
+    ratingCount: number;
+
     @Column("float")
-    rateTotal: number;
+    rating: number;
 
 }

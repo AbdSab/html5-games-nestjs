@@ -20,7 +20,7 @@ export class GamesService {
   ) {}
 
   async findGameAll(_page: number): Promise<Game[]> {
-    return await this.gameRep.find({relations:["categories"], take: MAX_ELEMENTS_PAGE, skip:_page, order:{createdAt:'DESC'}});
+    return await this.gameRep.find({relations:["categories"], take: MAX_ELEMENTS_PAGE, skip:_page*MAX_ELEMENTS_PAGE, order:{createdAt:'DESC'}});
   }
 
   async findCategoryAll(): Promise<Category[]>{
@@ -56,9 +56,10 @@ export class GamesService {
         return await this.gameRep.save(game); 
   }
 
-  async addGameRate(_slug: string,_rate: number, _ip: string): Promise<Game>{
+  async addGameRate(_slug: string,_rate: number): Promise<Game>{
       let game = await this.gameRep.findOne({where:{slug:_slug}});
-      game.rateTotal;
+      game.rating = (game.rating*game.ratingCount + _rate)/(game.ratingCount+1);
+      game.ratingCount++;
       return await this.gameRep.save(game);
   }
 
@@ -77,7 +78,8 @@ export class GamesService {
             game.description = faker.lorem.paragraph();
             game.link = faker.internet.url();
             game.createdAt = faker.date.past();
-            game.rateTotal = faker.random.number();
+            game.rating = faker.random.number();
+            game.ratingCount = faker.random.number();
             game.plays = faker.random.number();
 
             await this.gameRep.save(game);

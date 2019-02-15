@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Render, HttpException, HttpStatus } from '@nestjs/common';
 import { Category } from '../entities/category.entity';
 import { GamesService } from '../services/games.service';
 
@@ -13,11 +13,18 @@ export class CategoryController {
     }
 
     @Get("/:categorySlug")
+    @Render("index")
     async find(@Param() params, @Query() query){
+
         if(!query.page) query.page = 0;
-        console.log(query.page);
+        
         const category = await this.gamesService.findCategoryBySlug(params.categorySlug);
-        return await this.gamesService.findGamesByCategory(category, query.page);
+        if(category === undefined)
+            throw new HttpException('Not found', HttpStatus.BAD_REQUEST);
+        
+        const games = await this.gamesService.findGamesByCategory(category, query.page);
+
+        return {category,games};
     }
     
 }
