@@ -80,6 +80,7 @@ export class GamesService {
             game.rating = faker.random.number();
             game.ratingCount = faker.random.number();
             game.plays = faker.random.number();
+            game.image = "";
 
             await this.gameRep.save(game);
 

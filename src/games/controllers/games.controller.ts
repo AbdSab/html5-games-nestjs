@@ -9,9 +9,14 @@ export class GamesController {
 
     @Get("")
     @Render("games/index")
-    async list(@Param() params, @Query() query){
+    async list(@Query() query){
         let games = await this.gamesService.findGameAll(query.page);
         return {games};
+    }
+
+    @Get("add")
+    async play(){
+        return await this.gamesService.addData();
     }
 
     @Get("/:gameSlug")
@@ -27,10 +32,6 @@ export class GamesController {
         return await this.gamesService.addGameRate(data.game, data.rate);
     }
 
-    @Get("add")
-    async play(){
-        return await this.gamesService.addData();
-    }
     
 
 }
