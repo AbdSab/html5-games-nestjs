@@ -3,7 +3,10 @@
 <div class="container">
     <div itemscope="" itemtype ="http://schema.org/Game">
         <span itemtype="gamePlateform" hidden>Html5</span>
-        <h1 itemprop="name"><%= game.name %></h1>
+        <div class="d-flex justify-content-between">
+            <h1 itemprop="name"><%= game.name %></h1>
+            <button class="fullscreen"><i class="fa fa-expand"></i></button>
+        </div>
         <div class="text-center">
             <iframe allowfullscreen class="w-100" frameborder='0' scrolling='no' src='https://m.shtoss.com/game/sequence/index.html'></iframe>
         </div>
@@ -11,13 +14,70 @@
         <% game.categories.forEach(category => {%>
         <a href="/category/<%= category.slug %>" itemtype="genre"><%= category.name %></a>
         <%});%>
-        <div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating" >
-            <span itemprop="worstRating" hidden>1</span>
-            <span itemprop="ratingValue"><%= game.rating %></span>
-            /
-            <span itemprop="bestRating">5</span>
-            <span itemprop="ratingCount"><%= game.ratingCount%></span>
+        <div class="bg-light">
+            <div class="rating-form">
+                <button class="star" onmouseout="hoverOut()" onmouseover="hover(1)" onclick="selected(1)"><span class="fa fa-star"></span></button>
+                <button class="star" onmouseout="hoverOut()" onmouseover="hover(2)" onclick="selected(2)"><span class="fa fa-star"></span></button>
+                <button class="star" onmouseout="hoverOut()" onmouseover="hover(3)" onclick="selected(3)"><span class="fa fa-star"></span></button>
+                <button class="star" onmouseout="hoverOut()" onmouseover="hover(4)" onclick="selected(4)"><span class="fa fa-star"></span></button>
+                <button class="star" onmouseout="hoverOut()" onmouseover="hover(5)" onclick="selected(5)"><span class="fa fa-star"></span></button>
+                <span class="rated" hidden="">Rated successfully !</span>
+            </div>
+            <% if(game.ratingCount > 0){ %>
+            <div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating" >
+                <span itemprop="worstRating" hidden="">1</span>
+                <span itemprop="ratingValue"><%= game.rating %></span>
+                /
+                <span itemprop="bestRating">5</span>
+                <span itemprop="ratingCount"><%= game.ratingCount%></span>
+            </div>
+            <%} else {%>
+                <div>No rating be the first to rate !</div>
+            <%}%>
+        </div>
+        
+        <div class="bg-light p-2">
+            <h5>Description</h5>
+            <%= game.description %>
         </div>
     </div>
 </div>
+
+<script>
+    var rate = 0;
+    var forms = document.querySelectorAll(".rating-form button");
+
+    if(rate > 0){
+        for(var i=0; i<rate && i<5; i++){
+            forms[i].classList.add("star-hover");
+        }
+    }
+
+    function selected(value){
+        if (rate> 0) return;
+        rate = value;
+        fetch("/games/<%= game.slug %>/rate", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({rate: value})
+        }).then(e => document.querySelector(".rated").removeAttribute("hidden")
+        );
+    }
+
+    function hover(value){
+        if(rate > 0) return;
+        for(var i=0; i<value && i<5; i++){
+            forms[i].classList.add("star-hover");
+        }
+    }
+
+    function hoverOut(){
+        if(rate > 0) return; 
+        forms.forEach(form => form.classList.remove("star-hover"))
+    }
+
+</script>
 <% include ../../partials/footer %>

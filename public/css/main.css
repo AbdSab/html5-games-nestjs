@@ -1,7 +1,8 @@
-@media screen and (max-width: 640px) {
-  iframe {
-    min-height: 300px; } }
+.star, .fullscreen {
+  border: none;
+  background: 0;
+  padding: 0;
+  margin: 0; }
 
-@media screen and (max-width: 1024px) {
-  iframe {
-    min-height: 720px; } }
+.star-hover {
+  color: orange; }

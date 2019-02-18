@@ -35,11 +35,11 @@ export class GamesController {
         return {head,breadcrumb, game}
     }
 
-    @Post("/rate")
-    async rateGame(@Body() data): Promise<Game>{
+    @Post("/:gameSlug/rate")
+    async rateGame(@Param() params,@Body() data): Promise<Game>{
         let _rate = Number(data.rate);
         if(_rate>5 || _rate <0) throw new HttpException('Rate error', HttpStatus.BAD_REQUEST);
-        return await this.gamesService.addGameRate(data.game, data.rate);
+        return await this.gamesService.addGameRate(params.gameSlug, _rate);
     }
 
     
