@@ -1,0 +1,7 @@
+@media screen and (max-width: 640px) {
+  iframe {
+    min-height: 300px; } }
+
+@media screen and (max-width: 1024px) {
+  iframe {
+    min-height: 720px; } }

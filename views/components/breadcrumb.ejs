@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="">
+        <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+            <% breadcrumb.forEach((link, index, array) => { %>
+                <li class="breadcrumb-item <%= index==array.length-1?'active':'' %>" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <a itemprop="item" href="<%= link.link %>">
+                        <span itemprop="name">
+                            <%= link.name %>
+                        </span>
+                        <meta itemprop="position" content="<%= index+1 %>"/>
+                    </a>
+                </li>
+            <% }); %>
+        </ol>
+    </div>
+</div>

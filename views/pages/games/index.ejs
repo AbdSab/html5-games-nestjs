@@ -1,0 +1,20 @@
+<% include ../../partials/head   %>
+<% include ../../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <% games.forEach(game => { %>
+      <div class="col">
+          <a href="/games/<%= game.slug %>">
+            <h3><%= game.name %></h3>
+            <img src="https://via.placeholder.com/128" alt="<%= game.name %> thumbnail">
+            <% game.categories.forEach(category => {%>
+              <a href="/category/<%= category.slug %>"><%= category.name %></a>
+            <%});%>
+          </a>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<% include ../../partials/footer %>

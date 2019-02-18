@@ -4,7 +4,7 @@ import { Repository, FindOperator } from 'typeorm';
 import { Game } from '../entities/game.entity';
 import { Category } from '../entities/category.entity';
 import { getConnection } from "typeorm";
-import { MAX_ELEMENTS_PAGE } from '../../constants';
+import { MAX_ELEMENTS_PAGE } from '../../other/constants';
 
 const faker = require('faker');
 
@@ -27,7 +27,7 @@ export class GamesService {
   }
 
   async findGameBySlug(_slug: string): Promise<Game>{
-      return await this.gameRep.findOne({where:{slug:_slug}});
+      return await this.gameRep.findOne({relations:["categories"], where:{slug:_slug}});
   }
 
   async findCategoryBySlug(_slug: string): Promise<Category>{
