@@ -13,7 +13,7 @@ export class CategoryController {
     }
 
     @Get("/:categorySlug")
-    @Render("index")
+    @Render("categories/index")
     async find(@Param() params, @Query() query){
 
         if(!query.page) query.page = 0;

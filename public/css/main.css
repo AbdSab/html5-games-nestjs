@@ -6,3 +6,13 @@
 
 .star-hover {
   color: orange; }
+
+.game {
+  border-radius: 2px;
+  background-color: white; }
+  .game h5 {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
+  .game:hover {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }

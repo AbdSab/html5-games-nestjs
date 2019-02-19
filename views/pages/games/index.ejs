@@ -1,17 +1,22 @@
 <% include ../../partials/head   %>
 <% include ../../partials/header %>
-
+<% include ../../components/categories %>
+ 
 <div class="container">
   <div class="row">
     <% games.forEach(game => { %>
-      <div class="col">
+      <div class="col-4 col-xs-3 col-md-2 mb-2">
+        <div class="game">
           <a href="/games/<%= game.slug %>">
-            <h3><%= game.name %></h3>
-            <img src="https://via.placeholder.com/128" alt="<%= game.name %> thumbnail">
-            <% game.categories.forEach(category => {%>
-              <a href="/category/<%= category.slug %>"><%= category.name %></a>
-            <%});%>
+            <img class="w-100" src="https://via.placeholder.com/128" alt="<%= game.name %> thumbnail">
+            <h5 class="m-0 p-0"><%= game.name %></h5>
+            <div class="text-center">
+              <% for(var i=1; i<=5; i++){%>
+                <span class="star<%= game.rating>=i ? '-hover':'' %> fa fa-star fa-sm"></span>
+              <% } %>
+            </div>
           </a>
+        </div>
       </div>
     <% }); %>
   </div>
